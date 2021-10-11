@@ -4,17 +4,16 @@ import { RolesService } from 'src/roles/roles.service';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BlockUserDto } from './dto/block-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import * as bcrypt from 'bcryptjs';
 import { User } from './users.model';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(User) private userRepository: typeof User,
-    private roleService: RolesService,
-  ) {}
+  constructor(@InjectModel(User) private userRepository: typeof User, private roleService: RolesService) {}
 
   async createUser(dto: CreateUserDto) {
-    const user = await this.userRepository.create(dto);
+    const hashPassword = await bcrypt.hash(dto.password, 5);
+    const user = await this.userRepository.create({ ...dto, password: hashPassword });
     const role = await this.roleService.getRoleByValue('USER');
     await user.$set('roles', [role.id]);
     user.roles = [role];

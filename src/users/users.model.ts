@@ -1,12 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  BelongsToMany,
-  Column,
-  DataType,
-  HasMany,
-  Model,
-  Table,
-} from 'sequelize-typescript';
+import { BelongsToMany, Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { Post } from 'src/posts/posts.model';
 import { Role } from 'src/roles/roles.model';
 import { UserRoles } from 'src/roles/user-roles.model';
@@ -54,4 +47,16 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @HasMany(() => Post)
   post: Post[];
+}
+
+export class UserToken {
+  @ApiProperty({
+    example:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RVc2VyMiIsImlkIjozLCJyb2xlcyI6W3siaWQiOjIsInZhbHVlIjoiVVNFUiIsImRlc2NyaXB0aW9uIjoi0J_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiY3JlYXRlZEF0IjoiMjAyMS0wNS0yMVQyMzoyMDoyNS4zMTVaIiwidXBkYXRlZEF0IjoiMjAyMS0wNS0yMVQyMzoyMDoyNS4zMTVaIn1dLCJpYXQiOjE2MjE4OTY1MzMsImV4cCI6MTYyMTk4MjkzM30.3pxNDdYKJq8yL_b4JDx7YmbMgnPRM_TSn8MqFX8fwps',
+    description: 'Токен авторизации пользователя',
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  token: string;
 }
