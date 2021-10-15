@@ -4,7 +4,6 @@ import { RolesService } from 'src/roles/roles.service';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BlockUserDto } from './dto/block-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import * as bcrypt from 'bcryptjs';
 import { User } from './users.model';
 
 @Injectable()
